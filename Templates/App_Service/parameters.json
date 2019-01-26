@@ -1,0 +1,24 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "value": "dev-infrastructure-6dge3"
+        },
+        "hostingPlanName": {
+            "value": "freeappserviceplan"
+        },
+        "hostingEnvironment": {
+            "value": ""
+        },
+        "location": {
+            "value": "East US"
+        },
+        "serverFarmResourceGroup": {
+            "value": "newfreeresources-rg"
+        },
+        "subscriptionId": {
+            "value": "99087b45-0e5a-475e-8194-ae33db2aefcb"
+        }
+    }
+}
