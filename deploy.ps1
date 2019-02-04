@@ -1,3 +1,4 @@
+
 Write-Host "Starting Deployment"
 
 $Env = "dev"
@@ -13,7 +14,6 @@ $resourcegroups = @{
 
   foreach ($resources in $resourcegroups.GetEnumerator()) 
    {
-
      if($resources.key -contains $resgrp)
       {
          $ResourceGroup = $resources.value  
@@ -65,9 +65,7 @@ function storage_account {
 
  foreach ($resources in $storageaccounts.GetEnumerator()) 
   {
-
    $AvailableResource = Get-AzureRmResource -ResourceType "Microsoft.Storage/storageAccounts" | Where-Object {$_.Name -match $resources.value}
-
    if(!($AvailableResource))
    {
       replace_parameters_and_deploy_storage -resgrp $ResGrpType -newstoragename $resources.value -template $Template_file -parameters $Parameter_file
