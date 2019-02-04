@@ -8,7 +8,6 @@ $resourcegroups = @{
   "DemoResourceGroup" = "newfreeresources-rg"
  }
 
-
  function replace_parameters_and_deploy_storage {
  Param ($resgrp,$newstoragename,$template,$parameters)
 
@@ -21,13 +20,9 @@ $resourcegroups = @{
       }
    }
  
-  #echo $ResourceGroup
- 
   $randomstring = ([char[]] ([char[]]([char]97..[char]122)) + 0..9 | sort {Get-Random})[0..4] -join ''
-  #echo "${randomstring}" 
 
   $StorageName = "${Env}" + $newstoragename + "${randomstring}"
-  #echo $StorageName
 
   Write-Host ("Template location is {0}" -f "${template}")
 
@@ -71,18 +66,13 @@ function storage_account {
  foreach ($resources in $storageaccounts.GetEnumerator()) 
   {
 
-   #Write-Host ("{0} has value {1}" -f $resources.key, $resources.value)
    $AvailableResource = Get-AzureRmResource -ResourceType "Microsoft.Storage/storageAccounts" | Where-Object {$_.Name -match $resources.value}
 
    if(!($AvailableResource))
    {
-      #Write-Host $resources.value
-      #Write-Host "Resource does not Exists"
       replace_parameters_and_deploy_storage -resgrp $ResGrpType -newstoragename $resources.value -template $Template_file -parameters $Parameter_file
    }
   }
- 
-  #Write-Host ("Template location is {0}" -f "${Template_File}")
  }
 
 $tempappservice = "C:\POCS\Infrastructure\Templates\App_Service"
