@@ -80,6 +80,8 @@ function storage_account {
  foreach ($resources in $storageaccounts.GetEnumerator()) 
   {
   Write-Host "inside area 1"
+  Get-AzureRmResourceGroup
+   Write-Host "inside area 1.5"
    $AvailableResource = Get-AzureRmResource -ResourceType "Microsoft.Storage/storageAccounts" | Where-Object {$_.Name -match $resources.value}
    if(!($AvailableResource))
    {
