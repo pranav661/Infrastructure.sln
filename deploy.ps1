@@ -75,6 +75,7 @@ function storage_account {
  $storageaccounts = @{
   "tempaccountStorageAccountName" = "tempaccount"
   "testaccountStorageAccountName" = "testaccount"
+  "pclStorageAccountName" = "pclaccount"
  }
 
  foreach ($resources in $storageaccounts.GetEnumerator()) 
