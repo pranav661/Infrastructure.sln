@@ -1,4 +1,3 @@
-
 param(
  [Parameter(Mandatory=$True)]
  [string]$Envt,
@@ -23,7 +22,7 @@ $resourcegroups = @{
 
  function replace_parameters_and_deploy_storage {
  Param ($resgrp,$newstoragename,$template,$parameters)
-
+Write-Host "inside area 3"
   foreach ($resources in $resourcegroups.GetEnumerator()) 
    {
      if($resources.key -contains $resgrp)
@@ -80,9 +79,11 @@ function storage_account {
 
  foreach ($resources in $storageaccounts.GetEnumerator()) 
   {
+  Write-Host "inside area 1"
    $AvailableResource = Get-AzureRmResource -ResourceType "Microsoft.Storage/storageAccounts" | Where-Object {$_.Name -match $resources.value}
    if(!($AvailableResource))
    {
+   Write-Host "inside area 2"
       replace_parameters_and_deploy_storage -resgrp $ResGrpType -newstoragename $resources.value -template $Template_file -parameters $Parameter_file
    }
   }
