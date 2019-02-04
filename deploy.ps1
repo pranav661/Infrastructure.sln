@@ -1,7 +1,19 @@
 
+param(
+ [Parameter(Mandatory=$True)]
+ [string]$Envt,
+ 
+ [Parameter(Mandatory=$True)]
+ [string]$AppServiceParamLoc,
+ 
+ [Parameter(Mandatory=$True)]
+ [string]$StorAccParamLoc
+ )
+
 Write-Host "Starting Deployment"
 
-$Env = "dev"
+#$Env = "dev"
+Write-Host $Envt
 
 $resourcegroups = @{
   "AppServiceResourceGroup" = "web-rg"
@@ -22,7 +34,8 @@ $resourcegroups = @{
  
   $randomstring = ([char[]] ([char[]]([char]97..[char]122)) + 0..9 | sort {Get-Random})[0..4] -join ''
 
-  $StorageName = "${Env}" + $newstoragename + "${randomstring}"
+  $StorageName = "${Envt}" + $newstoragename + "${randomstring}"
+  Write-Host $StorageName
 
   Write-Host ("Template location is {0}" -f "${template}")
 
@@ -30,8 +43,10 @@ $resourcegroups = @{
   $json_data.parameters.storageAccountName.value = "${StorageName}"
   
   $json_data | ConvertTo-Json | Set-Content $parameters
+  
+  Write-Host $parameters
 
-  New-AzureRmResourceGroupDeployment -ResourceGroupName $ResourceGroup -TemplateFile $template -TemplateParameterFile $parameters
+  #New-AzureRmResourceGroupDeployment -ResourceGroupName $ResourceGroup -TemplateFile $template -TemplateParameterFile $parameters
 
  }
   
@@ -73,8 +88,5 @@ function storage_account {
   }
  }
 
-$tempappservice = "C:\POCS\Infrastructure\Templates\App_Service"
-$tempstoracc = "C:\POCS\Infrastructure\Templates\Storage_Account"
-
-#app_service -template_loc $tempappservice
-storage_account -template_loc "${tempstoracc}"
+#app_service -template_loc $AppServiceParamLoc
+storage_account -template_loc "${StorAccParamLoc}"
